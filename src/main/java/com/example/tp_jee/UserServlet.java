@@ -1,5 +1,6 @@
 package com.example.tp_jee;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,14 +17,12 @@ public class UserServlet extends HttpServlet {
         user = "Batman!";
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + user + "</h1>");
-        out.println("</body></html>");
+        request.setAttribute("user", user);
+
+        this.getServletContext().getRequestDispatcher("/helloUser.jsp").forward(request, response);
     }
 
     public void destroy() {
